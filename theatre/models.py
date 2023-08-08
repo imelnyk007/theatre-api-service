@@ -24,3 +24,19 @@ class Play(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TheatreHall(models.Model):
+    name = models.CharField(max_length=255)
+    rows = models.PositiveIntegerField()
+    seats_in_row = models.PositiveIntegerField()
+
+    @property
+    def capacity(self):
+        return self.rows * self.seats_in_row
+
+
+class Performance(models.Model):
+    play = models.ForeignKey(Play, on_delete=models.CASCADE, related_name="performance")
+    theatre_hall = models.ForeignKey(TheatreHall, on_delete=models.CASCADE, related_name="performance")
+    show_time = models.DateTimeField()
