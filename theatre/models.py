@@ -13,7 +13,7 @@ class Actor(models.Model):
     last_name = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return self.first_name + " " + self.last_name
 
 
 class Play(models.Model):
@@ -34,6 +34,9 @@ class TheatreHall(models.Model):
     @property
     def capacity(self):
         return self.rows * self.seats_in_row
+
+    def __str__(self):
+        return self.name
 
 
 class Performance(models.Model):
