@@ -50,6 +50,16 @@ class Performance(models.Model):
     theatre_hall = models.ForeignKey(TheatreHall, on_delete=models.CASCADE, related_name="performances")
     show_time = models.DateTimeField()
 
+    @staticmethod
+    def validate_show_time(show_time, minimum_show_time, error_to_raise):
+        if not (show_time >= minimum_show_time):
+            raise error_to_raise(
+                {
+                    "Show time":
+                        f"Show time can't be in past date"
+                }
+            )
+
 
 class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)

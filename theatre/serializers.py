@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import transaction
+from pytz import utc
 from rest_framework import serializers
 
 from theatre.models import Genre, Actor, Play, TheatreHall, Performance, Ticket, Reservation
@@ -51,6 +54,18 @@ class PerformanceSerializer(serializers.ModelSerializer):
         model = Performance
         fields = ("id", "play", "theatre_hall", "show_time")
 
+    def validate(self, attrs):
+        data = super(PerformanceSerializer, self).validate(attrs)
+        show_time_value = attrs["show_time"].replace(tzinfo=utc)
+        print(show_time_value)
+        minimum_show_time = datetime.datetime.now().replace(tzinfo=utc)
+        print(minimum_show_time)
+        Performance.validate_show_time(
+            show_time_value, minimum_show_time, serializers.ValidationError
+        )
+
+        return data
+
 
 class PerformanceListSerializer(PerformanceSerializer):
     play_title = serializers.CharField(source="play.title", read_only=True)
@@ -98,7 +113,7 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(TicketSerializer):
-    performance = PerformanceSerializer(many=False, read_only=True)
+    performance = PerformanceListSerializer(many=False, read_only=True)
 
 
 class ReservationListSerializer(serializers.ModelSerializer):
