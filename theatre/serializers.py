@@ -56,7 +56,7 @@ class PerformanceListSerializer(PerformanceSerializer):
     play_title = serializers.CharField(source="play.title", read_only=True)
     theatre_hall_name = serializers.CharField(source="theatre_hall.name", read_only=True)
     theatre_hall_capacity = serializers.IntegerField(source="theatre_hall.capacity", read_only=True)
-    available_seats = serializers.IntegerField(source="theatre_hall.capacity", read_only=True)
+    available_tickets = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Performance
@@ -65,7 +65,7 @@ class PerformanceListSerializer(PerformanceSerializer):
             "play_title",
             "theatre_hall_name",
             "theatre_hall_capacity",
-            "available_seats",
+            "available_tickets",
             "show_time"
         )  # TODO: доробити available_seats
 
