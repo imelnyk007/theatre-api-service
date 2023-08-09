@@ -82,12 +82,23 @@ class PerformanceListSerializer(PerformanceSerializer):
             "theatre_hall_capacity",
             "available_tickets",
             "show_time"
-        )  # TODO: доробити available_seats
+        )
 
 
 class PerformanceDetailSerializer(PerformanceSerializer):
     play = PlayListSerializer()
     theatre_hall = TheatreHallSerializer()
+
+
+class PerformanceReservationSerializer(PerformanceListSerializer):
+    class Meta:
+        model = Performance
+        fields = (
+            "id",
+            "play_title",
+            "theatre_hall_name",
+            "show_time"
+        )
 
 
 class TicketSerializer(serializers.ModelSerializer):
@@ -113,7 +124,7 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(TicketSerializer):
-    performance = PerformanceListSerializer(many=False, read_only=True)
+    performance = PerformanceReservationSerializer(many=False, read_only=True)
 
 
 class ReservationListSerializer(serializers.ModelSerializer):
@@ -138,4 +149,3 @@ class ReservationCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
         fields = ("id", "tickets", "created_at")
-
