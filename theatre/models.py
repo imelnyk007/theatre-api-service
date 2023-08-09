@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from rest_framework.exceptions import ValidationError
 
@@ -52,7 +53,7 @@ class Performance(models.Model):
 
 class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    #  user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ["-created_at"]
@@ -63,12 +64,6 @@ class Ticket(models.Model):
     seat = models.PositiveIntegerField()
     performance = models.ForeignKey(Performance, on_delete=models.CASCADE, related_name="tickets")
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, related_name="tickets")
-
-    class Meta:
-        unique_together = ("row", "seat", "performance")
-
-    def __str__(self):
-        return f"{self.performance} - (seat: {self.seat})"
 
     @staticmethod
     def validate_seat(seat_value, maximal_seat_capacity, error_to_raise):
@@ -103,3 +98,11 @@ class Ticket(models.Model):
         super(Ticket, self).save(
             force_insert, force_update, using, update_fields
         )
+
+    def __str__(self):
+        return (
+            f"{str(self.performance)} (row: {self.row}, seat: {self.seat})"
+        )
+
+    class Meta:
+        unique_together = ("performance", "row", "seat")

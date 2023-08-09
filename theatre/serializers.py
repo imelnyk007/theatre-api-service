@@ -1,3 +1,4 @@
+from django.db import transaction
 from rest_framework import serializers
 
 from theatre.models import Genre, Actor, Play, TheatreHall, Performance, Ticket, Reservation
@@ -97,11 +98,27 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(TicketSerializer):
-    movie_session = PerformanceSerializer(many=False, read_only=True)
+    performance = PerformanceSerializer(many=False, read_only=True)
 
 
-class ReservationSerializer(serializers.ModelSerializer):
-    tickets = TicketSerializer(many=True, allow_empty=False)
+class ReservationListSerializer(serializers.ModelSerializer):
+    tickets = TicketListSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Reservation
+        fields = ("id", "tickets", "created_at")
+
+
+class ReservationCreateSerializer(serializers.ModelSerializer):
+    tickets = TicketSerializer(many=True, read_only=False, allow_empty=False)
+
+    def create(self, validated_data):
+        with transaction.atomic():
+            tickets_data = validated_data.pop("tickets")
+            reservation = Reservation.objects.create(**validated_data)
+            for ticket_data in tickets_data:
+                Ticket.objects.create(reservation=reservation, **ticket_data)
+            return reservation
 
     class Meta:
         model = Reservation
