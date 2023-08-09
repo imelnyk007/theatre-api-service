@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from theatre.models import Genre, Actor, Play, TheatreHall
+from theatre.models import Genre, Actor, Play, TheatreHall, Performance
 from theatre.serializers import GenreSerializer, ActorSerializer, PlaySerializer, PlayListSerializer, \
-    PlayDetailSerializer, TheatreHallSerializer
+    PlayDetailSerializer, TheatreHallSerializer, PerformanceSerializer, PerformanceListSerializer, \
+    PerformanceDetailSerializer
 
 
 class GenreViewSet(viewsets.ModelViewSet):
@@ -33,3 +34,16 @@ class PlayViewSet(viewsets.ModelViewSet):
 class TheatreHallViewSet(viewsets.ModelViewSet):
     queryset = TheatreHall.objects.all()
     serializer_class = TheatreHallSerializer
+
+
+class PerformanceViewSet(viewsets.ModelViewSet):
+    queryset = Performance.objects.all()
+    serializer_class = PerformanceSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return PerformanceListSerializer
+        if self.action == "retrieve":
+            return PerformanceDetailSerializer
+
+        return self.serializer_class
