@@ -60,6 +60,9 @@ class Performance(models.Model):
                 }
             )
 
+    class Meta:
+        unique_together = ("theatre_hall", "show_time")
+
 
 class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
