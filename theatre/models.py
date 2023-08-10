@@ -62,6 +62,7 @@ class Performance(models.Model):
 
     class Meta:
         unique_together = ("theatre_hall", "show_time")
+        ordering = ["-show_time"]
 
 
 class Reservation(models.Model):

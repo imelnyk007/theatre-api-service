@@ -1,7 +1,9 @@
 from django.db.models import F, Count
+from rest_framework import filters
 from rest_framework import viewsets, mixins
 from rest_framework.viewsets import GenericViewSet
 
+from theatre.filters import PlayFilter, PerformanceFilter
 from theatre.models import (
     Genre,
     Actor,
@@ -42,6 +44,7 @@ class PlayViewSet(viewsets.ModelViewSet):
     queryset = Play.objects.all()
     serializer_class = PlaySerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+    filterset_class = PlayFilter
 
     def get_queryset(self):
         queryset = self.queryset
@@ -71,6 +74,8 @@ class PerformanceViewSet(viewsets.ModelViewSet):
     queryset = Performance.objects.all()
     serializer_class = PerformanceSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+    filterset_class = PerformanceFilter
+    ordering_fields = ["show_time"]
 
     def get_queryset(self):
         queryset = self.queryset
@@ -105,7 +110,8 @@ class ReservationViewSet(
 ):
     queryset = Reservation.objects.all()
     serializer_class = ReservationListSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ["show_time"]
 
     def get_queryset(self):
         queryset = self.queryset.filter(user=self.request.user)
