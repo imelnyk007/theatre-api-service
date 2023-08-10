@@ -1,5 +1,6 @@
 from django.db.models import F, Count
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
+from rest_framework.viewsets import GenericViewSet
 
 from theatre.models import (
     Genre,
@@ -96,7 +97,12 @@ class PerformanceViewSet(viewsets.ModelViewSet):
         return self.serializer_class
 
 
-class ReservationViewSet(viewsets.ModelViewSet):
+class ReservationViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    GenericViewSet
+):
     queryset = Reservation.objects.all()
     serializer_class = ReservationListSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
