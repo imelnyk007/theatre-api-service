@@ -6,5 +6,5 @@ theatre/migrations/
 user/migrations/
 media/
 theatre.log
-.env
 .DS_Store
+.env
