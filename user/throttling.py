@@ -14,8 +14,8 @@ class LoginFailRateThrottle(BaseThrottle):
         if request.method == "POST":
             email = request.POST["email"]
 
-        fail_key = f'login_fail_{email}'
-        block_key = f'login_block_{email}'
+        fail_key = f"login_fail_{email}"
+        block_key = f"login_block_{email}"
 
         if cache.get(block_key):
             return False

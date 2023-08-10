@@ -30,7 +30,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         serializer = self.get_serializer(data=request.data)
 
         email = request.POST["email"]
-        cache_key = f'login_fail_{email}'
+        cache_key = f"login_fail_{email}"
 
         try:
             serializer.is_valid(raise_exception=True)

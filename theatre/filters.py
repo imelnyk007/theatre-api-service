@@ -7,7 +7,7 @@ from theatre.models import Play, Actor, Genre, Performance
 
 
 class PlayFilter(django_filters.FilterSet):
-    title = django_filters.CharFilter(lookup_expr='icontains')
+    title = django_filters.CharFilter(lookup_expr="icontains")
     genres = django_filters.ModelMultipleChoiceFilter(
         queryset=Genre.objects.all()
     )
@@ -31,14 +31,14 @@ class DateRangeFilter(django_filters.Filter):
 
 class PerformanceFilter(django_filters.FilterSet):
     date_range = DateRangeFilter(
-        field_name='show_time',
-        lookup_expr='date'
+        field_name="show_time",
+        lookup_expr="date"
     )
     play = django_filters.CharFilter(
-        field_name='play__title',
-        lookup_expr='icontains'
+        field_name="play__title",
+        lookup_expr="icontains"
     )
 
     class Meta:
         model = Performance
-        fields = ['date_range', "play"]
+        fields = ["date_range", "play"]
