@@ -9,7 +9,10 @@ class LoginFailRateThrottle(BaseThrottle):
     LOGIN_FAILURES_BLOCK_TIME = 90  # seconds
 
     def allow_request(self, request, view):
-        email = request.POST["email"]
+        email = None
+
+        if request.method == "POST":
+            email = request.POST["email"]
 
         fail_key = f'login_fail_{email}'
         block_key = f'login_block_{email}'
