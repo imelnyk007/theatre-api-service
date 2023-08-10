@@ -6,3 +6,4 @@ theatre/migrations/
 user/migrations/
 media/
 theatre.log
+.env
