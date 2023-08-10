@@ -147,15 +147,6 @@ REST_FRAMEWORK = {
 
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
-
-    'DEFAULT_THROTTLE_CLASSES': [
-        'user.throttling.LoginFailRateThrottle',
-    ],
-
-    "DEFAULT_THROTTLE_RATES": {
-        "anon": "10/minute",
-        "user": "30/minute"
-    }
 }
 
 SIMPLE_JWT = {
@@ -185,6 +176,12 @@ LOGGING = {
         },
     },
     'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'theatre.log',
+            'formatter': 'simple',
+        },
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',

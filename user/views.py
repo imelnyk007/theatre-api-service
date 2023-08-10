@@ -7,6 +7,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 
 from user.serializers import UserSerializer
+from user.throttling import LoginFailRateThrottle
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -23,6 +24,7 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     LOGIN_FAILURES_TIME = 180  # seconds
+    throttle_classes = [LoginFailRateThrottle, ]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
