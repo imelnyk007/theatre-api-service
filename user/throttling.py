@@ -24,12 +24,14 @@ class LoginFailRateThrottle(BaseThrottle):
 
         if login_failures >= self.INCORRECT_LOGIN_TRIES:
             cache.set(block_key, True, self.LOGIN_FAILURES_BLOCK_TIME)
-            user_blocked_signal.send(sender=self.__class__, email=email, block_time=self.LOGIN_FAILURES_BLOCK_TIME)
+            user_blocked_signal.send(
+                sender=self.__class__,
+                email=email,
+                block_time=self.LOGIN_FAILURES_BLOCK_TIME
+            )
             return False
 
         return True
 
     def wait(self):
         return self.LOGIN_FAILURES_BLOCK_TIME
-
-
