@@ -1,4 +1,5 @@
 from django.db.models import F, Count
+from drf_spectacular.utils import extend_schema
 from rest_framework import filters, status
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
@@ -33,18 +34,21 @@ from theatre.serializers import (
 )
 
 
+@extend_schema(tags=["Genre"])
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
+@extend_schema(tags=["Actor"])
 class ActorViewSet(viewsets.ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
+@extend_schema(tags=["Play"])
 class PlayViewSet(viewsets.ModelViewSet):
     queryset = Play.objects.all()
     serializer_class = PlaySerializer
@@ -88,12 +92,14 @@ class PlayViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(tags=["Theatre Hall"])
 class TheatreHallViewSet(viewsets.ModelViewSet):
     queryset = TheatreHall.objects.all()
     serializer_class = TheatreHallSerializer
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
+@extend_schema(tags=["Performance"])
 class PerformanceViewSet(viewsets.ModelViewSet):
     queryset = Performance.objects.all()
     serializer_class = PerformanceSerializer
@@ -126,6 +132,7 @@ class PerformanceViewSet(viewsets.ModelViewSet):
         return self.serializer_class
 
 
+@extend_schema(tags=["Reservation"])
 class ReservationViewSet(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
