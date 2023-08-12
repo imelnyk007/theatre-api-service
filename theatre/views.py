@@ -16,6 +16,7 @@ from theatre.models import (
     Performance,
     Reservation
 )
+from theatre.pagination import ReservationPagination
 from theatre.permissions import IsAdminOrIfAuthenticatedReadOnly
 from theatre.serializers import (
     GenreSerializer,
@@ -141,6 +142,7 @@ class ReservationViewSet(
     queryset = Reservation.objects.all()
     serializer_class = ReservationListSerializer
     filter_backends = [filters.OrderingFilter]
+    pagination_class = ReservationPagination
     ordering_fields = ["show_time"]
 
     def get_queryset(self):
