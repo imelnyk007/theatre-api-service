@@ -1,0 +1,99 @@
+[
+  {
+    "model": "theatre.genre",
+    "pk": 1,
+    "fields": {
+      "name": "Drama"
+    }
+  },
+  {
+    "model": "theatre.genre",
+    "pk": 2,
+    "fields": {
+      "name": "Comedy"
+    }
+  },
+  {
+    "model": "theatre.actor",
+    "pk": 1,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Doe"
+    }
+  },
+  {
+    "model": "theatre.actor",
+    "pk": 2,
+    "fields": {
+      "first_name": "Jane",
+      "last_name": "Smith"
+    }
+  },
+  {
+    "model": "theatre.play",
+    "pk": 1,
+    "fields": {
+      "title": "Hamlet",
+      "description": "A tragic play by William Shakespeare",
+      "genres": [1],
+      "actors": [1]
+    }
+  },
+  {
+    "model": "theatre.play",
+    "pk": 2,
+    "fields": {
+      "title": "The Comedy of Errors",
+      "description": "A comedic play by William Shakespeare",
+      "genres": [2],
+      "actors": [2]
+    }
+  },
+  {
+    "model": "theatre.theatrehall",
+    "pk": 1,
+    "fields": {
+      "name": "Main Hall",
+      "rows": 10,
+      "seats_in_row": 15
+    }
+  },
+  {
+    "model": "theatre.theatrehall",
+    "pk": 2,
+    "fields": {
+      "name": "Small Hall",
+      "rows": 5,
+      "seats_in_row": 10
+    }
+  },
+  {
+    "model": "theatre.performance",
+    "pk": 1,
+    "fields": {
+      "play": 1,
+      "theatre_hall": 1,
+      "show_time": "2024-08-20T15:00:00Z"
+    }
+  },
+  {
+    "model": "theatre.performance",
+    "pk": 2,
+    "fields": {
+      "play": 2,
+      "theatre_hall": 2,
+      "show_time": "2024-08-21T18:30:00Z"
+    }
+  },
+  {
+    "model": "user.user",
+    "pk": 1,
+    "fields": {
+      "email": "admin.user@admin.com",
+      "password": "pbkdf2_sha256$320000$oZqdjfUqKC500V7kk3kMmb$TBVlOMhfJxWrxbUnNpWZK0+rYM242g7do/YM5tkhn+M=",
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true
+    }
+  }
+]
