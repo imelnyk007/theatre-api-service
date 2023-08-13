@@ -89,7 +89,7 @@
     "model": "user.user",
     "pk": 1,
     "fields": {
-      "email": "admin.user@admin.com",
+      "email": "admin@admin.com",
       "password": "pbkdf2_sha256$320000$oZqdjfUqKC500V7kk3kMmb$TBVlOMhfJxWrxbUnNpWZK0+rYM242g7do/YM5tkhn+M=",
       "is_superuser": true,
       "is_staff": true,
