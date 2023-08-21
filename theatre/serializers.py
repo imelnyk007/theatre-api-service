@@ -79,9 +79,7 @@ class PerformanceSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         data = super(PerformanceSerializer, self).validate(attrs)
         show_time_value = attrs["show_time"].replace(tzinfo=utc)
-        print(show_time_value)
         minimum_show_time = datetime.datetime.now().replace(tzinfo=utc)
-        print(minimum_show_time)
         Performance.validate_show_time(
             show_time_value, minimum_show_time, serializers.ValidationError
         )
