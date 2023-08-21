@@ -103,4 +103,4 @@ interface to explore and test the available API endpoints.
 ```
 
 ## DB Structure
-![DB_structure_Theatre_API_Service.png](..%2F..%2FDesktop%2FDB_structure_Theatre_API_Service.png)
+<img width="799" alt="DB_structure_Theatre_API_Service" src="https://github.com/imelnyk007/theatre-api-service/assets/132268296/af061cda-63c2-4895-b321-bc763711a4f4">
